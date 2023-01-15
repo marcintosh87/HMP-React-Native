@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import axios from 'axios';
 
@@ -13,14 +19,34 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: '#000',
     color: '#fff',
-    width: '70%',
+    width: '80%',
+    height: 40,
+    borderRadius: 16,
+    padding: 10,
+    marginBottom: 10,
+  },
+  chapterAndVerseNumber: {
+    backgroundColor: '#000',
+    color: '#fff',
+    width: '20%',
     height: 40,
     borderRadius: 16,
     padding: 10,
     marginBottom: 10,
   },
   verseText: {
-    padding: 10,
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  verseTextTitle: {
+    padding: 2,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
   },
 });
 
@@ -28,21 +54,23 @@ const baseUrl = 'https://bible-api.com/';
 
 const formatVerse = (verse) => {
   if (verse) {
-    const verseWithBook =
-      verse.verses[0].book_name +
-      ' ' +
-      verse.verses[0].chapter +
-      ':' +
-      verse.verses[0].verse +
-      ' ' +
-      verse.verses[0].text;
+    const verseText = verse.verses[0].text;
 
-    return verseWithBook;
+    return verseText;
+  }
+};
+const formatVerseTitle = (verse) => {
+  if (verse) {
+    const book = `${verse.verses[0].book_name} ${verse.verses[0].chapter}:${verse.verses[0].verse} `;
+
+    return book;
   }
 };
 
 export default function FindVerse() {
   const [text, setText] = useState('');
+  const [chapter, setChapter] = useState('');
+  const [lineNumber, setLineNumber] = useState('');
   const [verse, setVerse] = useState('');
   const [searchError, setSearchError] = useState(false);
 
@@ -60,28 +88,57 @@ export default function FindVerse() {
       console.error(error);
     }
   };
-  return (
-    <>
-      <View style={styles.container}>
-        <Text variant="titleMedium">Find A Verse</Text>
 
-        <TextInput
-          label="Find A Verse"
-          mode="flat"
-          value={text}
-          style={styles.textInput}
-          onChangeText={(text) => setText(text)}
-        />
-        <Button mode="contained" onPress={() => getVerse(text)}>
-          Search
-        </Button>
+  const disableSearch = Boolean(text.length < 1);
+  const disableClear = Boolean(verse.length < 1);
+
+  console.log(disableSearch);
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Text variant="titleLarge" style={{ paddingBottom: 8 }}>
+          Find A Verse
+        </Text>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            label="Find A Verse"
+            placeholder="e.g. John 3:16"
+            placeholderTextColor={'#555'}
+            mode="flat"
+            value={text}
+            style={styles.textInput}
+            onChangeText={(text) => setText(text)}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Button
+            disabled={disableClear}
+            mode="contained"
+            onPress={() => {
+              setVerse('');
+            }}
+          >
+            Clear
+          </Button>
+          <Button
+            disabled={disableSearch}
+            mode="contained"
+            onPress={() => getVerse(text)}
+          >
+            Search
+          </Button>
+        </View>
         <Text variant="titleMedium">
           {searchError ? 'No Verse Was Found' : ''}
+        </Text>
+        <Text variant="titleMedium" style={styles.verseTextTitle}>
+          {verse ? formatVerseTitle(verse) : ''}
         </Text>
         <Text variant="bodyMedium" style={styles.verseText}>
           {verse ? formatVerse(verse) : ''}
         </Text>
       </View>
-    </>
+    </TouchableWithoutFeedback>
   );
 }
