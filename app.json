@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02b1a6ee-a016-4212-b9f4-afd14d3f5bbb"
+      }
+    },
+    "owner": "marcoslopez87"
   }
 }
