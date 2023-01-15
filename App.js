@@ -4,12 +4,13 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Home from './src/Home';
+import FindVerse from './src/FindVerse';
 
 const PrayersRoute = () => <Home />;
 
-const HelpMePray = () => <Text>Albums</Text>;
+const HelpMePray = () => <FindVerse />;
 
-const FindAVerse = () => <Text>Recents</Text>;
+const FindAVerse = () => <FindVerse />;
 
 export default function App() {
   const [index, setIndex] = useState(0);
