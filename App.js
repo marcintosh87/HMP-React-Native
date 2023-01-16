@@ -5,21 +5,21 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Home from './src/Home';
 import FindVerse from './src/FindVerse';
+import Prayers from './src/Prayers';
 
-const PrayersRoute = () => <Home />;
+const PrayersRoute = () => <Prayers />;
 
-const HelpMePray = () => <FindVerse />;
+const HelpMePray = () => <Home />;
 
 const FindAVerse = () => <FindVerse />;
 
 export default function App() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const [routes] = useState([
     {
       key: 'prayers',
       title: 'Prayers',
       focusedIcon: 'hands-pray',
-      unfocusedIcon: 'heart-outline',
     },
     { key: 'helpMePray', title: 'Help Me Pray', focusedIcon: 'human-handsup' },
     { key: 'findAVerse', title: 'Find A Verse', focusedIcon: 'book-cross' },

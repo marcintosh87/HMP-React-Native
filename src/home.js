@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <View style={styles.container}>
-        <Text>Marcos is Here</Text>
+        <Text>Help Me Pray Coming Soon</Text>
         <Button onPress={() => console.log('I was clicked')}>
           Help Me Pray
         </Button>
