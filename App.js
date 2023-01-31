@@ -21,7 +21,11 @@ export default function App() {
       title: 'Prayers',
       focusedIcon: 'hands-pray',
     },
-    { key: 'helpMePray', title: 'Help Me Pray', focusedIcon: 'human-handsup' },
+    {
+      key: 'helpMePray',
+      title: 'Create A Prayer',
+      focusedIcon: 'human-handsup',
+    },
     { key: 'findAVerse', title: 'Find A Verse', focusedIcon: 'book-cross' },
   ]);
 

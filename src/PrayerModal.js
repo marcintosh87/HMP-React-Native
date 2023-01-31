@@ -1,54 +1,57 @@
 import React, { useState } from 'react';
 import { Text, Portal, Modal } from 'react-native-paper';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 
+// Palette for colors: https://coolors.co/palette/f72585-b5179e-7209b7-560bad-480ca8-3a0ca3-3f37c9-4361ee-4895ef-4cc9f0
 const styles = StyleSheet.create({
   pageContainer: {
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    marginTop: 50,
+    backgroundColor: '#7209b7',
+    marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
+    borderRadius: 16,
   },
-  pageTitleContainer: {
-    marginTop: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   listItem: {
-    color: 'red',
+    color: 'white',
+    padding: 10,
+    borderRadius: 16,
   },
 });
 
-const PrayerModal = ({ title, text }) => {
+const PrayerModal = ({ title, text, source }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  const containerStyle = { backgroundColor: 'white', padding: 20 };
+  const containerStyle = {
+    backgroundColor: 'white',
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
   return (
     <>
-      <ScrollView>
-        <View style={styles.pageContainer}>
-          <Text
-            variant="titleLarge"
-            style={styles.listItem}
-            onPress={showModal}
-          >
-            {title}
-          </Text>
-        </View>
-      </ScrollView>
+      <Pressable style={styles.pageContainer} onPress={showModal}>
+        <Text variant="titleLarge" style={styles.listItem}>
+          {title}
+        </Text>
+      </Pressable>
+
       <Portal>
         <Modal
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
         >
-          <Text>{text}</Text>
+          <Text variant="titleMedium">{title}</Text>
+          <Text style={{ paddingTop: 20 }}>{text}</Text>
+          <Text style={{ paddingTop: 20 }} variant="labelMedium">
+            Source: {source}
+          </Text>
         </Modal>
       </Portal>
     </>
